@@ -446,15 +446,47 @@ function createDefaultAppState(): AppState {
   };
 }
 
+function getDefaultProductImage(productName: string): {
+  imagemUrl: string;
+  imagemNomeArquivo: string;
+} {
+  switch (productName) {
+    case "Letra inicial porta maternidade":
+      return {
+        imagemUrl: "/uploads/produtos/Aurora.jpeg",
+        imagemNomeArquivo: "Aurora.jpeg",
+      };
+    case "Nome em letra caixa com LED RGB":
+      return {
+        imagemUrl: "/uploads/produtos/Aurora RGB.png",
+        imagemNomeArquivo: "Aurora RGB.png",
+      };
+    case "Escultura personalizada 3D":
+      return {
+        imagemUrl: "/uploads/produtos/O Viajante F.jpg",
+        imagemNomeArquivo: "O Viajante F.jpg",
+      };
+    default:
+      return {
+        imagemUrl: "",
+        imagemNomeArquivo: "",
+      };
+  }
+}
+
 function withDefaultProducts(base: AppState): AppState {
   if (base.produtos.length > 0) {
     return {
       ...base,
-      produtos: base.produtos.map((product) => ({
-        ...product,
-        imagemUrl: product.imagemUrl ?? "",
-        imagemNomeArquivo: product.imagemNomeArquivo ?? "",
-      })),
+      produtos: base.produtos.map((product) => {
+        const fallbackImage = getDefaultProductImage(product.nome);
+        return {
+          ...product,
+          imagemUrl: product.imagemUrl || fallbackImage.imagemUrl,
+          imagemNomeArquivo:
+            product.imagemNomeArquivo || fallbackImage.imagemNomeArquivo,
+        };
+      }),
     };
   }
 
@@ -474,8 +506,7 @@ function withDefaultProducts(base: AppState): AppState {
           "Letra caixa decorada com nuvens, estrelas e balao, produzida em impressao 3D para porta maternidade.",
         destaque: "Mais vendido",
         ativo: true,
-        imagemUrl: "",
-        imagemNomeArquivo: "",
+        ...getDefaultProductImage("Letra inicial porta maternidade"),
         materiais: [
           { id: uid("use"), materialId: byName("Filamento PLA Branco"), quantidade: 320 },
           { id: uid("use"), materialId: byName("Filamento PLA Rosa"), quantidade: 130 },
@@ -532,8 +563,7 @@ function withDefaultProducts(base: AppState): AppState {
           "Nome personalizado em letra caixa com fundo preto, tampo branco e iluminacao RGB interna.",
         destaque: "Alto ticket",
         ativo: true,
-        imagemUrl: "",
-        imagemNomeArquivo: "",
+        ...getDefaultProductImage("Nome em letra caixa com LED RGB"),
         materiais: [
           { id: uid("use"), materialId: byName("Filamento PLA Preto"), quantidade: 410 },
           { id: uid("use"), materialId: byName("Filamento PLA Branco"), quantidade: 280 },
@@ -591,8 +621,7 @@ function withDefaultProducts(base: AppState): AppState {
           "Escultura ou busto personalizado com acabamento manual e composicao por partes.",
         destaque: "Sob encomenda",
         ativo: true,
-        imagemUrl: "",
-        imagemNomeArquivo: "",
+        ...getDefaultProductImage("Escultura personalizada 3D"),
         materiais: [
           { id: uid("use"), materialId: byName("Filamento PLA Branco"), quantidade: 520 },
           { id: uid("use"), materialId: byName("Cola instantanea"), quantidade: 30 },
