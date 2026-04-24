@@ -14,7 +14,11 @@ Data da atualizacao: 24/04/2026
 
 2. Arquitetura atual
 - Front-end: React 18 + TypeScript + Vite.
+- `src/App.tsx` agora atua como compositor de layout, navegacao e roteamento interno das secoes.
+- `src/hooks/use-app-controller.ts` centraliza estado da aplicacao, sincronizacao local/nuvem, backup, PDF e controladores de CRUD.
+- `src/components/app-sections.tsx` concentra a renderizacao das secoes funcionais em blocos menores e reutilizaveis.
 - Persistencia hibrida: localStorage + opcao de banco remoto Supabase/Postgres.
+- Persistencia remota atualizada para modelo relacional, com fallback de leitura do formato legado em JSON unico.
 - Estilo: CSS proprio inspirado no layout apresentado do Bubble.
 - Referencia funcional: espelho do site antigo apenas para entender regras de negocio.
 
@@ -58,6 +62,19 @@ Data da atualizacao: 24/04/2026
 - Camada de persistencia remota: src/lib/storage.ts
 - Script SQL inicial: supabase-schema.sql
 - Modelo recomendado: Supabase com autenticacao por e-mail e RLS.
+- Tabelas principais:
+  app_settings,
+  materials,
+  packagings,
+  marketplaces,
+  marketplace_rules,
+  products,
+  product_materials,
+  product_packagings,
+  product_variants,
+  quotes,
+  quote_items.
+- Compatibilidade: a leitura remota tenta primeiro o modelo relacional e, se nao houver dados normalizados, faz fallback para `app_states` legado.
 - Observacao importante: GitHub nao hospeda banco Postgres; o repositorio guarda apenas o codigo. O banco precisa ficar em um servico externo gratuito/gerenciado.
 
 7. Analise de impacto desta versao
@@ -67,6 +84,8 @@ Data da atualizacao: 24/04/2026
   tsconfig.node.json
   src/main.tsx
   src/App.tsx
+  src/hooks/use-app-controller.ts
+  src/components/app-sections.tsx
   src/styles.css
   src/lib/storage.ts
   public/uploads/produtos/LEIA-ME.txt
@@ -83,9 +102,15 @@ Data da atualizacao: 24/04/2026
   orcamentos.
 - Risco principal:
   modo de armazenamento,
-  sessao autenticada da nuvem.
-- Risco principal:
-  sem configurar o Supabase, o sistema continua em modo local; a protecao remota depende da criacao do projeto e das credenciais locais.
+  sessao autenticada da nuvem,
+  integridade entre registros relacionados do Supabase.
+- Mitigacoes aplicadas:
+  `App.tsx` ficou mais enxuto e com menor acoplamento,
+  a camada `storage.ts` grava por entidades relacionadas,
+  o carregamento remoto mantem fallback para o formato legado,
+  a build de producao foi validada apos a refatoracao.
+- Risco residual:
+  sem executar `supabase-schema.sql` atualizado, o modo nuvem relacional nao funcionara; nesse caso o sistema continua operando em modo local.
 
 8. Como executar
 - Instalar dependencias:
@@ -111,7 +136,8 @@ Data da atualizacao: 24/04/2026
   2. usar o botao Gerar PDF no rodape do orcamento
 
 9. Proximos passos recomendados
-- Evoluir de JSON unico para tabelas relacionais de produtos, materiais, estoque e pedidos.
+- Criar migracao assistida do legado `app_states` para o modelo relacional no primeiro login.
 - Melhorar o upload de fotos com armazenamento automatico em bucket remoto.
 - Criar testes automatizados para utilitarios de calculo e fluxo de orcamento.
+- Adicionar code splitting nas secoes pesadas para reduzir o tamanho do bundle principal.
 - Adicionar tela de instalacao orientada do PWA e modo offline mais completo.
