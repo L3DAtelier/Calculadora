@@ -13,6 +13,30 @@ npm run build
 - Local: http://localhost:5173/
 - Rede: http://192.168.0.87:5173/
 
+-Como Publicar
+
+- Você precisa autenticar o GitHub no seu ambiente local com token ou GitHub CLI e depois rodar:
+```
+git push -u origin main
+```
+- Se quiser usar token pessoal com HTTPS, o fluxo comum é:
+- gerar um Personal Access Token no GitHub
+- usar seu usuário GitHub
+- usar o token no lugar da senha quando o Git pedir autenticação
+Arquivos Relevantes
+
+- App principal: App.tsx
+- Estilos: styles.css
+- Storage híbrido: storage.ts
+- Fotos: public/uploads/produtos
+- Documentação: Readme.txt e Estrutura.md
+Próximo Passo
+
+- Se você quiser, eu posso continuar agora com uma destas opções:
+- te orientar a configurar a autenticação GitHub e repetir o push
+- refatorar o App.tsx em componentes menores
+- modelar o Supabase em tabelas reais em vez de JSON único
+
 ## Entregue
 
 - SPA em React com layout responsivo inspirado no visual do Bubble.
