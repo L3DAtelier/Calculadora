@@ -1,17 +1,7 @@
 # Estrutura do projeto Calculadora
 
-## Comandos
-
-```bash
-npm install
-npm run dev
-npm run build
-```
-
 ## Enderecos atuais
 
-- Local: http://localhost:5173/
-- Rede: http://192.168.0.87:5173/
 
 -Como Publicar
 
