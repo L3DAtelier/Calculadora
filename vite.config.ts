@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  base: "/Calculadora/",
   plugins: [
     react(),
     VitePWA({
@@ -17,15 +18,16 @@ export default defineConfig({
         background_color: "#081224",
         display: "standalone",
         orientation: "portrait",
-        start_url: "/",
+        start_url: "/Calculadora/",
+        scope: "/Calculadora/",
         icons: [
           {
-            src: "/pwa-192x192.svg",
+            src: "pwa-192x192.svg",
             sizes: "192x192",
             type: "image/svg+xml",
           },
           {
-            src: "/pwa-512x512.svg",
+            src: "pwa-512x512.svg",
             sizes: "512x512",
             type: "image/svg+xml",
             purpose: "any maskable",
