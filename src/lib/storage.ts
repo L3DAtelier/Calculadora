@@ -10,7 +10,6 @@ export type CloudSessionInfo = {
 
 const LOCAL_STATE_KEY = "l3d-calculadora-precos-v1";
 const STORAGE_MODE_KEY = "l3d-calculadora-precos-storage-mode";
-const APP_ID = "calculadora-precos";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
@@ -153,7 +152,6 @@ export async function pullCloudSnapshot<T>(): Promise<T | null> {
     .from("app_states")
     .select("payload")
     .eq("owner_id", userId)
-    .eq("app_id", APP_ID)
     .maybeSingle();
 
   if (error) {
@@ -178,12 +176,11 @@ export async function pushCloudSnapshot<T>(payload: T): Promise<void> {
   const { error } = await supabaseClient.from("app_states").upsert(
     {
       owner_id: userId,
-      app_id: APP_ID,
       payload,
       updated_at: new Date().toISOString(),
     },
     {
-      onConflict: "owner_id,app_id",
+      onConflict: "owner_id",
     },
   );
 

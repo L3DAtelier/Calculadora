@@ -42,6 +42,23 @@ export function getErrorMessage(error: unknown): string {
     return error.message;
   }
 
+  if (typeof error === "string") {
+    return error;
+  }
+
+  if (error && typeof error === "object") {
+    const possibleMessage = "message" in error ? error.message : undefined;
+    const possibleDetails = "details" in error ? error.details : undefined;
+    const possibleHint = "hint" in error ? error.hint : undefined;
+    const parts = [possibleMessage, possibleDetails, possibleHint].filter(
+      (value): value is string => typeof value === "string" && value.trim().length > 0,
+    );
+
+    if (parts.length > 0) {
+      return parts.join(" | ");
+    }
+  }
+
   return "Erro nao identificado.";
 }
 
