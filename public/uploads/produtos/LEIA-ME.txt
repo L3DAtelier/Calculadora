@@ -1,0 +1,11 @@
+Pasta para fotos reais dos produtos.
+
+Como usar:
+1. Coloque aqui os arquivos de imagem versionados no projeto.
+2. Na ficha do produto, informe o caminho no formato:
+   /uploads/produtos/nome-da-foto.jpg
+3. Se preferir, use o upload rapido do sistema para salvar a imagem na base atual.
+
+Observacao:
+- O navegador nao consegue gravar automaticamente arquivos fisicos nesta pasta durante a execucao do app.
+- Para manter imagens no repositorio, copie os arquivos manualmente para esta pasta e faca commit.
