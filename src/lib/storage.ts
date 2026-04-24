@@ -118,9 +118,8 @@ export async function signInCloud(email: string): Promise<void> {
     email,
     options: {
       emailRedirectTo: new URL(import.meta.env.BASE_URL, window.location.origin).toString(),
-  },
-});
-    
+    },
+  });
 
   if (error) {
     throw error;

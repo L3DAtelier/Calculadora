@@ -317,7 +317,7 @@ export function useAppController(): {
       setCloudStatus("Carregando dados da nuvem...");
 
       try {
-        const snapshot = await pullCloudSnapshot();
+        const snapshot = await pullCloudSnapshot<AppState>();
         if (cancelled) {
           return;
         }
@@ -1150,7 +1150,7 @@ export function useAppController(): {
 
     setCloudBusy(true);
     try {
-      const snapshot = await pullCloudSnapshot();
+      const snapshot = await pullCloudSnapshot<AppState>();
       if (snapshot) {
         const hydratedState = withDefaultProducts(snapshot);
         setAppState(hydratedState);

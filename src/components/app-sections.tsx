@@ -13,7 +13,7 @@ import {
   Upload,
 } from "lucide-react";
 import type { Dispatch, RefObject, SetStateAction } from "react";
-import { asNumber, formatMoney, formatPercent } from "../lib/app-utils";
+import { asNumber, formatMoney, formatPercent, resolvePublicAssetUrl } from "../lib/app-utils";
 import { calculatePrice } from "../lib/pricing";
 import type {
   AppState,
@@ -146,7 +146,11 @@ export function DashboardSection({
               >
                 <div className="product-card-image">
                   {product.imagemUrl ? (
-                    <img src={product.imagemUrl} alt={product.nome} className="product-card-photo" />
+                    <img
+                      src={resolvePublicAssetUrl(product.imagemUrl)}
+                      alt={product.nome}
+                      className="product-card-photo"
+                    />
                   ) : null}
                   <span>{product.categoria}</span>
                 </div>
@@ -366,7 +370,10 @@ export function CatalogSection({
                 <div className="product-photo-panel">
                   <div className="product-photo-preview">
                     {selectedProduct.imagemUrl ? (
-                      <img src={selectedProduct.imagemUrl} alt={selectedProduct.nome} />
+                      <img
+                        src={resolvePublicAssetUrl(selectedProduct.imagemUrl)}
+                        alt={selectedProduct.nome}
+                      />
                     ) : (
                       <div className="product-photo-empty">Nenhuma foto vinculada a este produto.</div>
                     )}
@@ -375,7 +382,7 @@ export function CatalogSection({
                     <Field label="Caminho da foto">
                       <input
                         value={selectedProduct.imagemUrl}
-                        placeholder="/uploads/produtos/nome-da-foto.jpg"
+                        placeholder="uploads/produtos/nome-da-foto.jpg"
                         onChange={(event) =>
                           updateProduct(selectedProduct.id, { imagemUrl: event.target.value })
                         }
@@ -410,7 +417,7 @@ export function CatalogSection({
                         className="secondary-button"
                         onClick={() =>
                           updateProduct(selectedProduct.id, {
-                            imagemUrl: "/uploads/produtos/",
+                            imagemUrl: "uploads/produtos/",
                           })
                         }
                       >

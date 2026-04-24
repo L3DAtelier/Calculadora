@@ -1,5 +1,5 @@
 import type { AppState } from "../types/app";
-import { uid } from "./app-utils";
+import { normalizeStoredAssetPath, uid } from "./app-utils";
 
 function getDefaultProductImage(productName: string): {
   imagemUrl: string;
@@ -8,17 +8,17 @@ function getDefaultProductImage(productName: string): {
   switch (productName) {
     case "Letra inicial porta maternidade":
       return {
-        imagemUrl: "/uploads/produtos/Aurora.jpeg",
+        imagemUrl: "uploads/produtos/Aurora.jpeg",
         imagemNomeArquivo: "Aurora.jpeg",
       };
     case "Nome em letra caixa com LED RGB":
       return {
-        imagemUrl: "/uploads/produtos/Aurora RGB.png",
+        imagemUrl: "uploads/produtos/Aurora RGB.png",
         imagemNomeArquivo: "Aurora RGB.png",
       };
     case "Escultura personalizada 3D":
       return {
-        imagemUrl: "/uploads/produtos/O Viajante F.jpg",
+        imagemUrl: "uploads/produtos/O Viajante F.jpg",
         imagemNomeArquivo: "O Viajante F.jpg",
       };
     default:
@@ -206,7 +206,7 @@ export function withDefaultProducts(base: AppState): AppState {
         const fallbackImage = getDefaultProductImage(product.nome);
         return {
           ...product,
-          imagemUrl: product.imagemUrl || fallbackImage.imagemUrl,
+          imagemUrl: normalizeStoredAssetPath(product.imagemUrl || fallbackImage.imagemUrl),
           imagemNomeArquivo: product.imagemNomeArquivo || fallbackImage.imagemNomeArquivo,
         };
       }),

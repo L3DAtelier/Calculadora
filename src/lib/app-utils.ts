@@ -8,6 +8,8 @@ const percentFormatter = new Intl.NumberFormat("pt-BR", {
   maximumFractionDigits: 2,
 });
 
+const basePath = import.meta.env.BASE_URL ?? "/";
+
 export function uid(prefix: string): string {
   return `${prefix}-${Math.random().toString(36).slice(2, 10)}`;
 }
@@ -50,4 +52,35 @@ export function fileToDataUrl(file: File): Promise<string> {
     reader.onerror = () => reject(new Error("Nao foi possivel ler o arquivo selecionado."));
     reader.readAsDataURL(file);
   });
+}
+
+export function normalizeStoredAssetPath(path: string): string {
+  const trimmedPath = path.trim();
+
+  if (!trimmedPath) {
+    return "";
+  }
+
+  if (/^(data:|blob:|https?:\/\/)/i.test(trimmedPath)) {
+    return trimmedPath;
+  }
+
+  const normalizedBase = basePath === "/" ? "" : basePath.replace(/^\/|\/$/g, "");
+  const cleanedPath = trimmedPath.replace(/^\/+/, "");
+
+  if (normalizedBase && cleanedPath.startsWith(`${normalizedBase}/`)) {
+    return cleanedPath.slice(normalizedBase.length + 1);
+  }
+
+  return cleanedPath;
+}
+
+export function resolvePublicAssetUrl(path: string): string {
+  const normalizedPath = normalizeStoredAssetPath(path);
+
+  if (!normalizedPath || /^(data:|blob:|https?:\/\/)/i.test(normalizedPath)) {
+    return normalizedPath;
+  }
+
+  return `${basePath}${normalizedPath}`.replace(/([^:]\/)\/+/g, "$1");
 }
