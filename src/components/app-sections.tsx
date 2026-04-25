@@ -12,7 +12,7 @@ import {
   Trash2,
   Upload,
 } from "lucide-react";
-import type { Dispatch, RefObject, SetStateAction } from "react";
+import type { Dispatch, ReactNode, RefObject, SetStateAction } from "react";
 import { asNumber, formatMoney, formatPercent, resolvePublicAssetUrl } from "../lib/app-utils";
 import { calculatePrice } from "../lib/pricing";
 import type {
@@ -54,6 +54,39 @@ type QuoteTotals = {
   linhas: QuoteLine[];
   total: number;
 };
+
+function VariantFieldRow({
+  label,
+  children,
+  action,
+}: {
+  label: string;
+  children: ReactNode;
+  action?: ReactNode;
+}): JSX.Element {
+  return (
+    <div className={`variant-field-row ${action ? "has-action" : ""}`}>
+      <span className="variant-field-label">{label}</span>
+      <div className="variant-field-value">{children}</div>
+      {action ? <div className="variant-field-action">{action}</div> : null}
+    </div>
+  );
+}
+
+function InputWithUnit({
+  unit,
+  children,
+}: {
+  unit?: string;
+  children: ReactNode;
+}): JSX.Element {
+  return (
+    <div className={`input-with-unit ${unit ? "" : "no-unit"}`}>
+      {children}
+      {unit ? <span className="input-unit">{unit}</span> : null}
+    </div>
+  );
+}
 
 export function DashboardSection({
   filteredProducts,
@@ -461,102 +494,136 @@ export function CatalogSection({
                     </button>
                   }
                 />
-                <div className="table-like">
-                  <div className="table-head">
-                    <span>Nome</span>
-                    <span>Dimensoes</span>
-                    <span>Material</span>
-                    <span>Horas</span>
-                    <span>Energia</span>
-                    <span>Margem</span>
-                    <span />
-                  </div>
+                <div className="variant-list">
                   {selectedProduct.variantes.map((variant) => (
-                    <div className="table-row" key={variant.id}>
-                      <input
-                        value={variant.nome}
-                        onChange={(event) =>
-                          updateProductVariant(selectedProduct.id, variant.id, {
-                            nome: event.target.value,
-                          })
+                    <div className="variant-card" key={variant.id}>
+                      <VariantFieldRow
+                        label="Tamanho"
+                        action={
+                          <button
+                            type="button"
+                            className="icon-button"
+                            onClick={() => removeProductVariant(selectedProduct.id, variant.id)}
+                          >
+                            <Trash2 size={16} />
+                          </button>
                         }
-                      />
-                      <div className="inline-grid">
-                        <input
-                          type="number"
-                          value={variant.larguraMm}
-                          onChange={(event) =>
-                            updateProductVariant(selectedProduct.id, variant.id, {
-                              larguraMm: asNumber(event.target.value),
-                            })
-                          }
-                        />
-                        <input
-                          type="number"
-                          value={variant.alturaMm}
-                          onChange={(event) =>
-                            updateProductVariant(selectedProduct.id, variant.id, {
-                              alturaMm: asNumber(event.target.value),
-                            })
-                          }
-                        />
-                        <input
-                          type="number"
-                          value={variant.profundidadeMm}
-                          onChange={(event) =>
-                            updateProductVariant(selectedProduct.id, variant.id, {
-                              profundidadeMm: asNumber(event.target.value),
-                            })
-                          }
-                        />
-                      </div>
-                      <input
-                        type="number"
-                        step="0.01"
-                        value={variant.multiplicadorMaterial}
-                        onChange={(event) =>
-                          updateProductVariant(selectedProduct.id, variant.id, {
-                            multiplicadorMaterial: asNumber(event.target.value),
-                          })
-                        }
-                      />
-                      <input
-                        type="number"
-                        step="0.1"
-                        value={variant.horasProducao}
-                        onChange={(event) =>
-                          updateProductVariant(selectedProduct.id, variant.id, {
-                            horasProducao: asNumber(event.target.value),
-                          })
-                        }
-                      />
-                      <input
-                        type="number"
-                        step="0.01"
-                        value={variant.consumoEnergiaKwh}
-                        onChange={(event) =>
-                          updateProductVariant(selectedProduct.id, variant.id, {
-                            consumoEnergiaKwh: asNumber(event.target.value),
-                          })
-                        }
-                      />
-                      <input
-                        type="number"
-                        step="0.01"
-                        value={variant.margemSugeridaPct}
-                        onChange={(event) =>
-                          updateProductVariant(selectedProduct.id, variant.id, {
-                            margemSugeridaPct: asNumber(event.target.value),
-                          })
-                        }
-                      />
-                      <button
-                        type="button"
-                        className="icon-button"
-                        onClick={() => removeProductVariant(selectedProduct.id, variant.id)}
                       >
-                        <Trash2 size={16} />
-                      </button>
+                        <InputWithUnit>
+                          <input
+                            value={variant.nome}
+                            onChange={(event) =>
+                              updateProductVariant(selectedProduct.id, variant.id, {
+                                nome: event.target.value,
+                              })
+                            }
+                          />
+                        </InputWithUnit>
+                      </VariantFieldRow>
+
+                      <VariantFieldRow label="Dimensoes">
+                        <div className="variant-dimensions-grid">
+                          <InputWithUnit unit="mm">
+                            <input
+                              type="number"
+                              value={variant.larguraMm}
+                              placeholder="Largura"
+                              aria-label="Largura em milimetros"
+                              onChange={(event) =>
+                                updateProductVariant(selectedProduct.id, variant.id, {
+                                  larguraMm: asNumber(event.target.value),
+                                })
+                              }
+                            />
+                          </InputWithUnit>
+                          <InputWithUnit unit="mm">
+                            <input
+                              type="number"
+                              value={variant.alturaMm}
+                              placeholder="Altura"
+                              aria-label="Altura em milimetros"
+                              onChange={(event) =>
+                                updateProductVariant(selectedProduct.id, variant.id, {
+                                  alturaMm: asNumber(event.target.value),
+                                })
+                              }
+                            />
+                          </InputWithUnit>
+                          <InputWithUnit unit="mm">
+                            <input
+                              type="number"
+                              value={variant.profundidadeMm}
+                              placeholder="Profundidade"
+                              aria-label="Profundidade em milimetros"
+                              onChange={(event) =>
+                                updateProductVariant(selectedProduct.id, variant.id, {
+                                  profundidadeMm: asNumber(event.target.value),
+                                })
+                              }
+                            />
+                          </InputWithUnit>
+                        </div>
+                      </VariantFieldRow>
+
+                      <VariantFieldRow label="Multiplicador material">
+                        <InputWithUnit unit="x">
+                          <input
+                            type="number"
+                            step="0.01"
+                            value={variant.multiplicadorMaterial}
+                            onChange={(event) =>
+                              updateProductVariant(selectedProduct.id, variant.id, {
+                                multiplicadorMaterial: asNumber(event.target.value),
+                              })
+                            }
+                          />
+                        </InputWithUnit>
+                      </VariantFieldRow>
+
+                      <VariantFieldRow label="Horas">
+                        <InputWithUnit unit="h">
+                          <input
+                            type="number"
+                            step="0.1"
+                            value={variant.horasProducao}
+                            onChange={(event) =>
+                              updateProductVariant(selectedProduct.id, variant.id, {
+                                horasProducao: asNumber(event.target.value),
+                              })
+                            }
+                          />
+                        </InputWithUnit>
+                      </VariantFieldRow>
+
+                      <VariantFieldRow label="Energia">
+                        <InputWithUnit unit="kWh">
+                          <input
+                            type="number"
+                            step="0.01"
+                            value={variant.consumoEnergiaKwh}
+                            onChange={(event) =>
+                              updateProductVariant(selectedProduct.id, variant.id, {
+                                consumoEnergiaKwh: asNumber(event.target.value),
+                              })
+                            }
+                          />
+                        </InputWithUnit>
+                      </VariantFieldRow>
+
+                      <VariantFieldRow label="Margem">
+                        <InputWithUnit unit="%">
+                          <input
+                            type="number"
+                            step="0.01"
+                            value={variant.margemSugeridaPct}
+                            onChange={(event) =>
+                              updateProductVariant(selectedProduct.id, variant.id, {
+                                margemSugeridaPct: asNumber(event.target.value),
+                              })
+                            }
+                          />
+                        </InputWithUnit>
+                      </VariantFieldRow>
                     </div>
                   ))}
                 </div>

@@ -658,6 +658,12 @@ textarea {
   gap: 10px;
 }
 
+.variant-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .table-head,
 .table-row,
 .mini-row {
@@ -675,10 +681,47 @@ textarea {
 }
 
 .table-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   padding: 14px;
   border-radius: 18px;
   background: rgba(13, 30, 58, 0.75);
   border: 1px solid rgba(111, 144, 205, 0.1);
+}
+
+.variant-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(13, 30, 58, 0.75);
+  border: 1px solid rgba(111, 144, 205, 0.1);
+}
+
+.variant-field-row {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.variant-field-row.has-action {
+  grid-template-columns: 180px minmax(0, 1fr) 52px;
+}
+
+.variant-field-label {
+  color: #dbe8ff;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.variant-field-value {
+  min-width: 0;
+}
+
+.variant-field-action {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .materials,
@@ -692,8 +735,54 @@ textarea {
 
 .inline-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
+}
+
+.variant-dimensions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.input-with-unit {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  border-radius: 14px;
+  border: 1px solid rgba(129, 154, 206, 0.25);
+  background: rgba(9, 23, 46, 0.92);
+  overflow: hidden;
+}
+
+.input-with-unit input {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  min-height: auto;
+}
+
+.input-with-unit input:focus {
+  box-shadow: none;
+}
+
+.input-with-unit.no-unit input {
+  padding-right: 1rem;
+}
+
+.input-unit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  padding: 0 0.9rem;
+  border-left: 1px solid rgba(129, 154, 206, 0.18);
+  background: rgba(18, 42, 82, 0.9);
+  color: #8fb5ff;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 
 .mini-row {
@@ -980,6 +1069,19 @@ textarea {
   .materials,
   .packaging,
   .tiers {
+    grid-template-columns: 1fr;
+  }
+
+  .variant-field-row,
+  .variant-field-row.has-action {
+    grid-template-columns: 1fr;
+  }
+
+  .variant-field-action {
+    justify-content: flex-start;
+  }
+
+  .variant-dimensions-grid {
     grid-template-columns: 1fr;
   }
 }
