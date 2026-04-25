@@ -13,6 +13,10 @@ Para atualizar todos os arquivos do projeto no github, esteja cocom a conta gith
 git add .
 git commit -m "Atualização 25mar26 muda logo calculadora"
 git push origin main
+
+Se ocorrer erros, digite
+git pull origin main --> e resolva as inconsistencias entre os dois arquivos no proprio VSCode
+git push origin main --> depois acione esse
 ------------------------------------------------------------------------------------------------------------
 
 para compilar:
