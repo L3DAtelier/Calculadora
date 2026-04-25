@@ -8,6 +8,13 @@ git add src/components/app-sections.tsx  -->git add "Nome do arquivo" (ex: src/c
 para fazer o commit no github depois de atualizar os arquivos novos/modificados (git add "arquivo"):
 git commit -m "Descrição da mudança"
 
+------------------------------------------------------------------------------------------------------------
+Para atualizar todos os arquivos do projeto no github, esteja cocom a conta github aberta no chrome e no VSCode:
+git add .
+git commit -m "Atualização 25mar26 muda logo calculadora"
+git push origin main
+------------------------------------------------------------------------------------------------------------
+
 para compilar:
 npm run build
 
