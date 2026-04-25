@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["pwa-192x192.svg", "pwa-512x512.svg", "uploads/produtos/LEIA-ME.txt"],
+      includeAssets: ["PWAc-192x192.svg", "PWAc-512x512.svg", "uploads/produtos/LEIA-ME.txt"],
       manifest: {
         name: "Calculadora de Precos - L3D Atelier",
         short_name: "CalcPrecos",
@@ -22,12 +22,12 @@ export default defineConfig({
         scope: "/Calculadora/",
         icons: [
           {
-            src: "pwa-192x192.svg",
+            src: "PWAc-192x192.svg",
             sizes: "192x192",
             type: "image/svg+xml",
           },
           {
-            src: "pwa-512x512.svg",
+            src: "PWAc-512x512.svg",
             sizes: "512x512",
             type: "image/svg+xml",
             purpose: "any maskable",
