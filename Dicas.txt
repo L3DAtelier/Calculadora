@@ -1,0 +1,26 @@
+Um avez logado na conta github para atualizar os arquivos modificados arqui, digite:
+Quais arquivos estão diferentes:
+git status
+
+para subir os arquivos modificados:
+git add src/components/app-sections.tsx  -->git add "Nome do arquivo" (ex: src/components/app-sections.tsx)
+
+para fazer o commit no github depois de atualizar os arquivos novos/modificados (git add "arquivo"):
+git commit -m "Descrição da mudança"
+
+para compilar:
+npm run build
+
+para rodar:
+npm run dev
+
+
+-------------------------------------------------------------------------------------
+Variaveis importantes e onde estão
+
+🔢​ styles.css L365  substituindo simbolo calculadora 
+styles.css L365  ajuste o tamanho das imagens dos produtos no dashboard
+app-sections.tsx L147  ajusta o texto para nao ficar em cima da imagem dos produtos
+default-state.ts L9 - nomes dos produtos
+app-sections.tsx L115  - Dasboard Produtos em destaque
+default-state.ts L225 - Letra inicial porta maternidade

@@ -7,7 +7,6 @@ import {
   Cog,
   Factory,
   PackagePlus,
-  Printer,
   Search,
   Store,
   type LucideIcon,
@@ -36,6 +35,8 @@ const navigationItems: Array<{
   { id: "configuracoes", label: "Configuracoes", icon: Cog },
 ];
 
+const brandLogoUrl = `${import.meta.env.BASE_URL}PWAc-192x192.svg`;
+
 function App(): JSX.Element {
   const controller = useAppController();
   const currentSectionTitle =
@@ -46,7 +47,7 @@ function App(): JSX.Element {
       <aside className="sidebar">
         <div className="brand">
           <div className="brand-mark">
-            <Printer size={22} />
+            <img src={brandLogoUrl} alt="Logo da calculadora" className="brand-mark-image" />
           </div>
           <div>
             <h1>Calculadora</h1>

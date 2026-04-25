@@ -99,6 +99,12 @@ textarea {
   box-shadow: 0 20px 40px rgba(22, 225, 207, 0.22);
 }
 
+.brand-mark-image {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
 .brand h1,
 .topbar h2,
 .section-header h3,
@@ -379,10 +385,28 @@ textarea {
   background: linear-gradient(135deg, #1ee2cf, #7fe6ff);
 }
 
+.product-card-tags {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.category-pill {
+  border-radius: 999px;
+  padding: 0.42rem 0.72rem;
+  font-size: 0.82rem;
+  color: #03101e;
+  background: linear-gradient(135deg, #1ee2cf, #7fe6ff);
+  display: inline-flex;
+  align-items: center;
+}
+
 .product-card-photo {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  inset: 5px 200px;
+  width: 25%;
   height: 100%;
   object-fit: cover;
   object-position: center;
@@ -390,7 +414,8 @@ textarea {
 }
 
 .product-card-image span {
-  position: relative;
+  position: absolute;
+  object-position: right;
   z-index: 1;
 }
 

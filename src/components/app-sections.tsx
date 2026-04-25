@@ -145,6 +145,9 @@ export function DashboardSection({
                 }}
               >
                 <div className="product-card-image">
+                  <div className="product-card-tags">
+                    <span className="status-pill">{product.destaque}</span>
+                  </div>
                   {product.imagemUrl ? (
                     <img
                       src={resolvePublicAssetUrl(product.imagemUrl)}
@@ -152,7 +155,15 @@ export function DashboardSection({
                       className="product-card-photo"
                     />
                   ) : null}
-                  <span>{product.categoria}</span>
+
+                  </div>
+
+                <div className="product-card-body">
+                  <div className="product-card-head">
+                    <div>
+
+                    </div>
+                  </div>
                 </div>
                 <div className="product-card-body">
                   <div className="product-card-head">
